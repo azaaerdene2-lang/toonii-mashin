@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kitty Love 💗</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffe0ec, #fff5f9, #ffc6dd);
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+}
+
+/* Main card */
+.card {
+    width: 350px;
+    padding: 28px;
+    border-radius: 35px;
+    background: rgba(255,255,255,0.85);
+    border: 2px solid white;
+    box-shadow: 0 20px 60px rgba(220,100,150,0.2);
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* CSS Kitty */
+.kitty {
+    width: 105px;
+    height: 85px;
+    background: white;
+    border: 3px solid #f3a5c5;
+    border-radius: 48% 48% 45% 45%;
+    margin: 5px auto 22px;
+    position: relative;
+    box-shadow: 0 5px 12px #f3b6d0;
+}
+
+.ear {
+    position: absolute;
+    top: -15px;
+    width: 35px;
+    height: 40px;
+    background: white;
+    border: 3px solid #f3a5c5;
+    z-index: -1;
+}
+
+.ear.left {
+    left: 0;
+    transform: rotate(-25deg);
+    border-radius: 8px 25px 5px 10px;
+}
+
+.ear.right {
+    right: 0;
+    transform: rotate(25deg);
+    border-radius: 25px 8px 10px 5px;
+}
+
+.eye {
+    position: absolute;
+    top: 36px;
+    width: 6px;
+    height: 9px;
+    background: #333;
+    border-radius: 50%;
+}
+
+.eye.left { left: 27px; }
+.eye.right { right: 27px; }
+
+.nose {
+    position: absolute;
+    top: 48px;
+    left: 47px;
+    width: 8px;
+    height: 6px;
+    background: #ef91b6;
+    border-radius: 50%;
+}
+
+.whisker {
+    position: absolute;
+    top: 53px;
+    width: 20px;
+    height: 1px;
+    background: #aaa;
+}
+
+.whisker.l1 { left: 3px; transform: rotate(10deg); }
+.whisker.l2 { left: 3px; top: 60px; }
+.whisker.r1 { right: 3px; transform: rotate(-10deg); }
+.whisker.r2 { right: 3px; top: 60px; }
+
+.bow {
+    position: absolute;
+    top: -18px;
+    right: 8px;
+    width: 30px;
+    height: 20px;
+}
+
+.bow:before, .bow:after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #ff79ae;
+    border: 2px solid #ed5996;
+}
+
+.bow:before {
+    left: 0;
+    transform: rotate(35deg);
+    border-radius: 5px 10px 5px 10px;
+}
+
+.bow:after {
+    right: 0;
+    transform: rotate(-35deg);
+    border-radius: 10px 5px 10px 5px;
+}
+
+h1 {
+    color: #df75a4;
+    font-size: 25px;
+    margin-bottom: 7px;
+}
+
+.subtitle {
+    color: #c99aae;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 23px;
+}
+
+/* Display */
+#display {
+    width: 100%;
+    height: 65px;
+    border: none;
+    outline: none;
+    border-radius: 18px;
+    background: #fff0f6;
+    color: #d65c91;
+    font-size: 27px;
+    text-align: right;
+    padding: 15px;
+    margin-bottom: 18px;
+    box-shadow: inset 0 2px 8px #eebbd0;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 11px;
+}
+
+button {
+    height: 55px;
+    border: none;
+    border-radius: 17px;
+    background: #ffe3ef;
+    color: #ce6695;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
+    box-shadow: 0 4px 8px #edc4d6;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    background: #ffc6dd;
+}
+
+.operator {
+    background: #f7a9ca;
+    color: white;
+}
+
+.clear {
+    background: #e985ad;
+    color: white;
+}
+
+.equal {
+    background: #db6f9e;
+    color: white;
+}
+
+/* Love screen */
+#loveScreen {
+    display: none;
+    padding: 25px 0 15px;
+    animation: appear 1s ease;
+}
+
+.loveText {
+    color: #ed4b70;
+    font-size: 29px;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.bigHeart {
+    font-size: 85px;
+    color: #ed244f;
+    display: block;
+    margin: 15px auto;
+    animation: heartbeat 1s infinite;
+}
+
+.again {
+    margin-top: 22px;
+    padding: 14px 25px;
+    background: #ed82ad;
+    color: white;
+    font-size: 15px;
+    border-radius: 20px;
+    width: 100%;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.2); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: scale(.7); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Floating hearts */
+.heart {
+    position: fixed;
+    bottom: -40px;
+    color: #ed315c;
+    font-size: 25px;
+    pointer-events: none;
+    animation: floatUp 4s linear forwards;
+    z-index: 1;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-110vh) rotate(30deg);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div id="calculator">
+
+        <div class="kitty">
+            <div class="ear left"></div>
+            <div class="ear right"></div>
+            <div class="bow"></div>
+            <div class="eye left"></div>
+            <div class="eye right"></div>
+            <div class="nose"></div>
+            <div class="whisker l1"></div>
+            <div class="whisker l2"></div>
+            <div class="whisker r1"></div>
+            <div class="whisker r2"></div>
+        </div>
+
+        <h1>Zak Calculator</h1>
+        <div class="subtitle">  </div>
+
+        <input id="display" readonly placeholder="0">
+
+        <div class="buttons">
+
+            <button class="clear" onclick="clearAll()">C</button>
+            <button onclick="add('%')">%</button>
+            <button onclick="backspace()">⌫</button>
+            <button class="operator" onclick="add('/')">÷</button>
+
+            <button onclick="add('7')">7</button>
+            <button onclick="add('8')">8</button>
+            <button onclick="add('9')">9</button>
+            <button class="operator" onclick="add('*')">×</button>
+
+            <button onclick="add('4')">4</button>
+            <button onclick="add('5')">5</button>
+            <button onclick="add('6')">6</button>
+            <button class="operator" onclick="add('-')">−</button>
+
+            <button onclick="add('1')">1</button>
+            <button onclick="add('2')">2</button>
+            <button onclick="add('3')">3</button>
+            <button class="operator" onclick="add('+')">+</button>
+
+            <button onclick="add('0')">0</button>
+            <button onclick="add('.')">.</button>
+            <button class="equal" onclick="calculate()" style="grid-column:span 2">=</button>
+
+        </div>
+    </div>
+
+    <div id="loveScreen">
+        <div class="loveText">
+            Хайртай шүү,<br>
+            хайраа
+        </div>
+
+        <span class="bigHeart">♥</span>
+
+        <button class="again" onclick="restart()">
+            Дахин эхлэх
+        </button>
+    </div>
+
+</div>
+
+<script>
+const display = document.getElementById('display');
+
+function add(value) {
+    if (display.value === 'Error') display.value = '';
+    if (display.value.length < 25) {
+        display.value += value;
+    }
+}
+
+function clearAll() {
+    display.value = '';
+}
+
+function backspace() {
+    display.value = display.value.slice(0, -1);
+}
+
+function calculate() {
+    try {
+        const expression = display.value;
+
+        if (!expression || !/^[0-9+\-*/%.() ]+$/.test(expression)) return;
+
+        const result = Function('"use strict"; return (' + expression + ')')();
+
+        if (!Number.isFinite(result)) {
+            display.value = 'Error';
+            return;
+        }
+
+        document.getElementById('calculator').style.display = 'none';
+        document.getElementById('loveScreen').style.display = 'block';
+
+        for (let i = 0; i < 30; i++) {
+            setTimeout(createHeart, i * 100);
+        }
+
+    } catch {
+        display.value = 'Error';
+    }
+}
+
+function restart() {
+    display.value = '';
+
+    document.getElementById('loveScreen').style.display = 'none';
+    document.getElementById('calculator').style.display = 'block';
+}
+
+function createHeart() {
+    const heart = document.createElement('div');
+
+    heart.className = 'heart';
+    heart.innerHTML = '♥';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = (15 + Math.random() * 30) + 'px';
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 4000);
+}
+</script>
+
+</body>
+</html>
